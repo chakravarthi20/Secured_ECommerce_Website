@@ -1,0 +1,34 @@
+{% extends "kagi/base.html" %} {% load i18n %} {% load static %} 
+{% block content %} {{ block.super }}
+
+<section
+  class="bg-image"
+  style="background-color: lavender; padding-bottom: 100px; padding-top: 50px"
+>
+  <div class="mask d-flex align-items-center h-100 gradient-custom-3">
+    <div class="container">
+      <div class="container">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+          <div class="col-12 col-md-9 col-lg-7 col-xl-6">
+            <div class="card" style="background-color: white">
+              <div class="card-body p-5">
+                <p class="text mb-5">
+                  {% trans 'To add a security key to your account, insert it, tap the button below, and accept the browser prompt to add the key.' %}
+                </p>
+
+                <form id="register-form" name="register" method="get" class="form-group">
+                  {% csrf_token %} {{ form }}
+                  <button id="register" type="submit" class="btn btn-primary" style="float:right;">
+                    {% trans 'Add WebAuthn Key' %}
+                  </button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<script src="{% static 'js/webauthn.js' %}"></script>
+{% endblock %}

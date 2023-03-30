@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% load static %}
+{% load i18n %}
+
+{% block content %}
+<script src="{% static 'kagi/base64js.min.js' %}"></script>
+<script>
+    window.Kagi = window.Kagi || {};
+    Kagi.begin_activate = '{% url 'kagi:begin-activate' %}';
+    Kagi.begin_assertion = '{% url 'kagi:begin-assertion' %}';
+    Kagi.verify_credential_info = '{% url 'kagi:verify-credential-info' %}';
+    Kagi.verify_assertion = '{% url 'kagi:verify-assertion' %}';
+    Kagi.keys_list = '{% url 'kagi:webauthn-keys' %}';
+</script>
+{{ block.super }}
+
+<div id="webauthn-undefined-error" style="display: none">
+    {% blocktrans %}
+    This browser is not among the <a href="https://caniuse.com/webauthn" target="_blank">
+    list of browsers that support WebAuthn security keys.</a>
+    {% endblocktrans %}
+</div>
+{% endblock %}
