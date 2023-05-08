@@ -4,7 +4,7 @@
   .topbar,
   .wrap_header{
     color: white !important;
-	
+
   }
   .topbar a,
   .topbar-child1,
@@ -72,7 +72,15 @@
               <a href="/shop/">Shop</a>
             </li>
 
-            {% categories %} {% if request.user.is_authenticated %}
+            {% categories %}
+             <li>
+              <a href="/privacy/">Privacy</a>
+            </li>
+            <li>
+              <a href="/contact/">Conctact us</a>
+            </li>
+            {% if request.user.is_authenticated %}
+
             <li>
               <a href="{% url 'salespage:order-summary' %}"
                 >Cart<span class="badge badge-dark"
@@ -95,6 +103,7 @@
               </ul>
             </li>
             {% endif %}
+
           </ul>
         </nav>
       </div>
@@ -110,68 +119,45 @@
         </a>
 
         <span class="linedivide1"></span>
-
+        {% if request.user.is_authenticated %}
         <div class="header-wrapicon2">
           <img
             src="{% static 'images/icons/icon-header-02.png' %}"
             class="header-icon1 js-show-header-dropdown"
             alt="ICON"
           />
-          <span class="header-icons-noti">0</span>
+          <span class="header-icons-noti">{{ request.user|cart_item_count }}</span>
 
           <!-- Header cart noti -->
           <div class="header-cart header-dropdown">
             <ul class="header-cart-wrapitem">
+                {% for order_item in object.items.all %}
               <li class="header-cart-item">
                 <div class="header-cart-item-img">
-                  <img src="{% static 'images/item-cart-01.jpg' %}" alt="IMG" />
+                  <img src="{{ order_item.item.image.url }}" alt="IMG" />
                 </div>
 
                 <div class="header-cart-item-txt">
                   <a href="#" class="header-cart-item-name">
-                    White Shirt With Pleat Detail Back
+                    {{ order_item.item.title }}
                   </a>
 
-                  <span class="header-cart-item-info"> 1 x $19.00 </span>
+                  <span class="header-cart-item-info"> ${{ order_item.item.price }} </span>
+
                 </div>
               </li>
-
-              <li class="header-cart-item">
-                <div class="header-cart-item-img">
-                  <img src="{% static 'images/item-cart-02.jpg' %}" alt="IMG" />
-                </div>
-
-                <div class="header-cart-item-txt">
-                  <a href="#" class="header-cart-item-name">
-                    Converse All Star Hi Black Canvas
-                  </a>
-
-                  <span class="header-cart-item-info"> 1 x $39.00 </span>
-                </div>
-              </li>
-
-              <li class="header-cart-item">
-                <div class="header-cart-item-img">
-                  <img src="{% static 'images/item-cart-03.jpg' %}" alt="IMG" />
-                </div>
-
-                <div class="header-cart-item-txt">
-                  <a href="#" class="header-cart-item-name">
-                    Nixon Porter Leather Watch In Tan
-                  </a>
-
-                  <span class="header-cart-item-info"> 1 x $17.00 </span>
-                </div>
-              </li>
+              {% empty %}
+                  <span class="header-cart-item-info">Your cart is empty</span>
+              {% endfor %}
             </ul>
 
-            <div class="header-cart-total">Total: $75.00</div>
+            <div class="header-cart-total">Total: ${{ object.get_total }}</div>
 
             <div class="header-cart-buttons">
               <div class="header-cart-wrapbtn">
                 <!-- Button -->
                 <a
-                  href="cart.html"
+                  href="{% url 'salespage:order-summary' %}"
                   class="flex-c-m size1 bg1 bo-rad-20 hov1 s-text1 trans-0-4"
                 >
                   View Cart
@@ -181,7 +167,7 @@
               <div class="header-cart-wrapbtn">
                 <!-- Button -->
                 <a
-                  href="#"
+                  href="/checkout"
                   class="flex-c-m size1 bg1 bo-rad-20 hov1 s-text1 trans-0-4"
                 >
                   Check Out
@@ -190,6 +176,7 @@
             </div>
           </div>
         </div>
+        {% endif %}
       </div>
     </div>
   </div>
@@ -221,52 +208,31 @@
             class="header-icon1 js-show-header-dropdown"
             alt="ICON"
           />
+          {% if request.user.is_authenticated %}
           <span class="header-icons-noti">0</span>
 
           <!-- Header cart noti -->
+
           <div class="header-cart header-dropdown">
             <ul class="header-cart-wrapitem">
+                {% for order_item in object.items.all %}
               <li class="header-cart-item">
                 <div class="header-cart-item-img">
-                  <img src="{% static 'images/item-cart-01.jpg' %}" alt="IMG" />
+                  <img src="{{ order_item.item.image.url }}" alt="IMG" />
                 </div>
 
                 <div class="header-cart-item-txt">
                   <a href="#" class="header-cart-item-name">
-                    White Shirt With Pleat Detail Back
+                    {{ order_item.item.title }}
                   </a>
 
-                  <span class="header-cart-item-info"> 1 x $19.00 </span>
+                  <span class="header-cart-item-info"> ${{ order_item.item.price }} </span>
+
                 </div>
               </li>
-
-              <li class="header-cart-item">
-                <div class="header-cart-item-img">
-                  <img src="{% static 'images/item-cart-02.jpg' %}" alt="IMG" />
-                </div>
-
-                <div class="header-cart-item-txt">
-                  <a href="#" class="header-cart-item-name">
-                    Converse All Star Hi Black Canvas
-                  </a>
-
-                  <span class="header-cart-item-info"> 1 x $39.00 </span>
-                </div>
-              </li>
-
-              <li class="header-cart-item">
-                <div class="header-cart-item-img">
-                  <img src="{% static 'images/item-cart-03.jpg' %}" alt="IMG" />
-                </div>
-
-                <div class="header-cart-item-txt">
-                  <a href="#" class="header-cart-item-name">
-                    Nixon Porter Leather Watch In Tan
-                  </a>
-
-                  <span class="header-cart-item-info"> 1 x $17.00 </span>
-                </div>
-              </li>
+              {% empty %}
+                  <span class="header-cart-item-info">Your cart is empty</span>
+              {% endfor %}
             </ul>
 
             <div class="header-cart-total">Total: $75.00</div>
@@ -275,7 +241,7 @@
               <div class="header-cart-wrapbtn">
                 <!-- Button -->
                 <a
-                  href="cart.html"
+                  href="{% url 'salespage:order-summary' %}"
                   class="flex-c-m size1 bg1 bo-rad-20 hov1 s-text1 trans-0-4"
                 >
                   View Cart
@@ -285,7 +251,7 @@
               <div class="header-cart-wrapbtn">
                 <!-- Button -->
                 <a
-                  href="#"
+                  href="/checkout"
                   class="flex-c-m size1 bg1 bo-rad-20 hov1 s-text1 trans-0-4"
                 >
                   Check Out
@@ -293,6 +259,7 @@
               </div>
             </div>
           </div>
+          {% endif %}
         </div>
       </div>
 

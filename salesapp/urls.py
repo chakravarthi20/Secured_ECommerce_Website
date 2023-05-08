@@ -22,5 +22,7 @@ urlpatterns = [
     path('accounts/', include('allauth.urls')),
     path('', include('salespage.urls', namespace='salespage')),
     path('auth/', include('kagi.urls', namespace='kagi')),
-    path('auth/login', RedirectView.as_view(url=reverse_lazy('kagi:login')), name='login')
+    path('auth/login', RedirectView.as_view(url=reverse_lazy('kagi:login')), name='login'),
+    path('paypal/', include('paypal.standard.ipn.urls')),
+
 ]

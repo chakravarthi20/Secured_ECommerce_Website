@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Make Payment{% endblock %}
+
+{% block content %}
+<script src="https://www.paypal.com/sdk/js?client-id=AZR1_A3UE4xAYDZm8fbU5_0igg1Fy9-R-7i-l__KeIQdRyumlwOqzeMt09Rpk5mIvNI84WdERqQbupxk&currency=USD"></script>
+<div class="container" style="margin-top: 50px;">
+    <div class="row">
+        <div class="col-md-8 order-md-1 card" >
+            <h4 class="mb-3" style=" margin-top: 26px;">Pay with PayPal</h4>
+            <div id="paypal-button-container" class="mt-2"></div>
+        </div>
+     {% include "order_snippet.html" %}
+     </div>
+
+
+  </div>
+
+  <footer class="my-5 pt-5 text-muted text-center text-small">
+    <p class="mb-1">&copy; Vanatel.com</p>
+    <ul class="list-inline">
+      <li class="list-inline-item"><a href="#">Privacy</a></li>
+      <li class="list-inline-item"><a href="#">Terms</a></li>
+      <li class="list-inline-item"><a href="#">Support</a></li>
+    </ul>
+  </footer>
+  <script>
+      paypal.Buttons({
+          style: {
+              layout: 'vertical',
+              shape: 'pill',
+          },
+          createOrder: function(data, actions){
+              return actions.order.create({
+                  purchase_units:[{
+                       amount:{
+                      value: '50.0'
+                    }
+                  }]
+
+              });
+          },
+          onApprove: function(data, actions){
+              return actions.order.capture().then(function(orderData){
+                  var transaction = orderData.purchase_units[0].payments.captures[0];
+                  alert('Transaction ' + transaction.status + ':' + transaction.id);
+
+              });
+          }
+      }).render('#paypal-button-container');
+  </script>
+{% endblock %}

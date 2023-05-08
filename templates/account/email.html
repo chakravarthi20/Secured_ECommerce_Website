@@ -5,7 +5,25 @@
 {% block head_title %}{% trans "Account" %}{% endblock %}
 
 {% block content %}
-    <h1>{% trans "E-mail Addresses" %}</h1>
+<style type="text/css">
+  input {
+
+    border: 1px solid #ced4da !important;
+
+}
+</style>
+
+
+<section class="vh-100 bg-image" style="background-color: lavender">
+  <div class="mask d-flex align-items-center h-100 gradient-custom-3">
+<div class="container">
+
+  <div class="row d-flex justify-content-center align-items-center h-100">
+
+    <div class="col-12 col-md-9 col-lg-7 col-xl-6">
+      <div class="card" style="border-radius: 15px">
+        <div class="card-body p-5">
+    <h1 class="text-uppercase text-center mb-5">{% trans "E-mail Addresses" %}</h1>
 {% if user.emailaddress_set.all %}
 <p>{% trans 'The following e-mail addresses are associated with your account:' %}</p>
 
@@ -49,9 +67,17 @@
 
     <form method="post" action="{% url 'account_email' %}" class="add_email">
         {% csrf_token %}
-        {{ form.as_p }}
+        {{ form }}
         <button name="action_add" type="submit">{% trans "Add E-mail" %}</button>
     </form>
+
+     </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
 
 {% endblock %}
 
